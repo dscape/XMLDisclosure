@@ -16,10 +16,8 @@ public class PrivacyFunctions {
      String xquery,
      String purpose,
      ResultSet[] rs1
-    )
-      throws SQLException, Exception {
+    ) throws SQLException, Exception {
     isValidXQuery(xquery);
-    
     rs1[0] = runSQLStatement(xquery);
   }
 
@@ -32,7 +30,6 @@ public class PrivacyFunctions {
      ResultSet[] rs1
     ) throws SQLException, Exception {
     isValidXQuery(xquery);
-
     rs1[0] = runSQLStatement(xquery);
   }
 
@@ -44,26 +41,17 @@ public class PrivacyFunctions {
      String purpose,
      ResultSet[] rs1
     ) throws SQLException, Exception {
-    // Check for valid constraints
     isValidXQuery(xquery);
-
-    // Get the columns that have policies that apply
     Object[] xmlCols                = targetXMLColumns(xquery);
-    String [] requiredModifications = new String[xmlCols.length];
-
-    for ( int i = 0; i < xmlCols.length; i++ ) {
-      // Get the required updates
-      requiredModifications[i] = 
-        getRequiredXMLUpdateModificationsFor(
-          (String) xmlCols[i], 
-          purpose, 
-          "cp",
-          "i"
-        ); 
-    }
-    
+    String [] requiredModifications = 
+      getRequiredXMLUpdateModificationsFor(xmlCols[i], purpose, "cp", "i");
     String[] prologBodyPair = extractPrologAndBodyFrom(xquery);
-    
+    String filter_query = buildQueryUsing(
+      xquery,
+      xmlCols,
+      requiredModifications,
+      prologBodyPair
+    )
     rs1[0] = runSQLStatement( prologBodyPair[0] + " " + prologBodyPair[1] );
   }
 
@@ -118,6 +106,26 @@ public class PrivacyFunctions {
       return prologBodyPair;
   }
 
+  private static String[] getRequiredXMLUpdateModificationsFor(
+    Object[] xmlCols,
+    String purpose,
+    String copyVarName,
+    String iVarName
+  ) {
+    String[] requiredModifications = new String[xmlCols.length];
+    for ( int i = 0; i < xmlCols.length; i++ ) {
+      // Get the required updates
+      requiredModifications[i] = 
+        getRequiredXMLUpdateModificationsFor(
+          (String) xmlCols[i], 
+          purpose, 
+          "cp",
+          "i"
+        );
+    }
+    return requiredModifications;
+  }
+
   private static String getRequiredXMLUpdateModificationsFor(
     String xmlColumn, 
     String purpose,
@@ -128,6 +136,26 @@ public class PrivacyFunctions {
      return "do replace value of $" + copyVarName +
             "/customerinfo/name with $" + iVarName +
             "/customerinfo/name/text()";
+  }
+
+  private static String buildQueryUsing(
+    String xquery,
+    Object[] xmlCols,
+    String [] requiredModifications,
+    String[] prologBodyPair
+  ) {
+    // Dummy of course
+    // Maybe if modifications, then method else method
+    StringBuilder query = new StringBuilder();
+    query.append("XQuery ");
+    query.append(prologBodyPair[0]);
+    query.append("let $target := (");
+    query.append(prologBodyPair[1]);
+    query.append(") for $i in $target return transform copy $cp := $i modify(");
+    query.append(" do delete $cp//text(), do delete $cp//@*, ");
+    query.append(requiredModifications[0]);
+    query.append(") return $cp");
+    return query.toString();
   }
 
 //----------------------------------------------------------------------- db  --
