@@ -1,0 +1,3 @@
+SQL4302N  Procedure or user-defined function "XMLDISCLOSURE.FILTER", specific 
+name "FILTER" aborted with an exception "Invalid XQuery statement: null, 
+doesn't st".  SQLSTATE=38501

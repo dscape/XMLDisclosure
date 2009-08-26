@@ -43,16 +43,16 @@ public class PrivacyFunctions {
     ) throws SQLException, Exception {
     isValidXQuery(xquery);
     Object[] xmlCols                = targetXMLColumns(xquery);
-    String [] requiredModifications = 
-      getRequiredXMLUpdateModificationsFor(xmlCols[i], purpose, "cp", "i");
     String[] prologBodyPair = extractPrologAndBodyFrom(xquery);
+    String [] requiredModifications = 
+      getRequiredXMLUpdateModificationsFor(xmlCols, purpose, "cp", "i");
     String filter_query = buildQueryUsing(
       xquery,
       xmlCols,
       requiredModifications,
       prologBodyPair
-    )
-    rs1[0] = runSQLStatement( prologBodyPair[0] + " " + prologBodyPair[1] );
+    );
+    rs1[0] = runSQLStatement( filter_query );
   }
 
 //---------------------------------------------------------------------- aux --

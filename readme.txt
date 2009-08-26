@@ -13,7 +13,15 @@ XQuery
 XQuery db2-fn:xmlcolumn("CUSTOMER.INFO") @
 
 db2 "call xmldisclosure.filter('xquery', 'contact')"
+db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')', 'contact')"
+## will this make it loose the context? smart....
 db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')/customerinfo', 'contact')"
+db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')/customerinfo/name', 'contact')"
+
+o db2set DB2_JVM_STARTARGS="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=7777"
+o Debug Perspective -> Run -> Debug Configuration -> Java Application -> Remote Java Application (localhost:7777)
+
+
 
       IDEA
   Possible Filters

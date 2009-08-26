@@ -14,6 +14,7 @@
 ################################################################################
 log_i=log/install_$(date -u +%m-%d-%Y-%H.%M).log    # installation log
 log_u=log/uninstall_$(date -u +%m-%d-%Y-%H.%M).log  # uninstallation log
+log_t=log/test_$(date -u +%m-%d-%Y-%H.%M).log       # test log
 
 # jdk ##########################################################################
 jdk=/opt/IBM/ODS2.2/jdk/bin # jdk location (bin folder)
@@ -42,11 +43,16 @@ mkdir jar > /dev/null 2>&1   # for .jar
 mkdir log > /dev/null 2>&1   # for .log
 
 # permissions ##################################################################
-sudo chmod -R 777 jar/ class/ log/
+sudo chmod -R 777 jar/ class/ log/ 
+sudo find . -type f -name \*.sh -exec chmod 755 {} \;
+sudo find . -type f -name \*.rb -exec chmod 755 {} \;
+sudo find . -type f -name \*.out -exec chmod 644 {} \;
+sudo find . -type f -name \*.log -exec chmod 666 {} \;
 
 ####################################################################~ EXPORTS ##
 export XD_INST_LOG=$log_i
 export XD_UNST_LOG=$log_u
+export XD_TEST_LOG=$log_t
 export XD_JDK=$jdk
 export XD_DB2_LVL="$db2l"
 export XD_DB2_INST=$instance
