@@ -18,6 +18,13 @@ db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')', 'co
 db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')/customerinfo', 'contact')"
 db2 "call xmldisclosure.filter('xquery db2-fn:xmlcolumn(''CUSTOMER.INFO'')/customerinfo/name', 'contact')"
 
+--------------------------------------------------------------------------------
+debug and production staging - for turning on and off performance like
+cli logs
+db2diag
+db2 GET CLI CFG FOR SECTION COMMON
+--------------------------------------------------------------------------------
+
 o db2set DB2_JVM_STARTARGS="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=7777"
 o Debug Perspective -> Run -> Debug Configuration -> Java Application -> Remote Java Application (localhost:7777)
 

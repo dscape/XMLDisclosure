@@ -80,7 +80,7 @@ public class PrivacyFunctions {
     StringBuilder xq_prolog = new StringBuilder();
     StringBuffer xq_body    = new StringBuffer();
 
-    xq_prolog.append("XQuery ");
+    //xq_prolog.append("XQuery ");
 
     Pattern namespaceDeclaration = 
       Pattern.compile(
