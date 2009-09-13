@@ -1,4 +1,6 @@
-XQuery 
+Start by editing the config.sh to fit your environment
+----------------------------------------------------------------------------------
+-XQuery 
   for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
   return 
     copy $cp := $i

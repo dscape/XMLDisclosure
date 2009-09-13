@@ -18,7 +18,7 @@ echo "  . Reading configuration file"
 
 ####################################################################~ COMPILE ##
 echo "  . Compiling class from source (PrivacyFunctions)"
-$jdk/javac \
+$XD_JDK/javac \
   -classpath .:"$XD_DB2/java/db2jcc.jar:$XD_DB2/java/db2jcc_license_cu.jar" \
   -d class \
   -Xlint \
