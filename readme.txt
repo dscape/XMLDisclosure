@@ -1,13 +1,141 @@
 Start by editing the config.sh to fit your environment
-----------------------------------------------------------------------------------
--XQuery 
+Great read me file right? Rest is for me self
+So... Wait for the real thing this is still a work in progress
+
+Remember to put xml update article do matthias na tese..
+
+mudar o delete de atributos para replace string vazia
+unica maneira de naos os perder
+
+APENAS FULL RECORD (FICHEIRO XML COMPLETO) OPTSINS OUTS
+FUTURE WORK: Ao nivel do elemento XML
+--------------------------------------------------------------------------------
+Case 1: All customers, no opt-ins or opt-outs
+  Purpose: Marketing
+  Policy: Disclose name and country. No opt-ins ot opt-out
+  Q : XQuery db2-fn:xmlcolumn("CUSTOMER.INFO")
+  Q': XQuery 
+      for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+      return 
+        copy $cp := $i
+        modify(
+          do delete $cp//text(),
+          do delete $cp//@*,
+          do insert attribute Cid { $i/customerinfo/@Cid } into $cp/customerinfo,
+          for $j at $x in $cp/customerinfo/phone
+          return
+            do replace value of $j with $i/customerinfo/phone[$x]
+      )
+      return $cp
+
+
+--------------------------------------------------------------------------------
+XQuery db2-fn:xmlcolumn("CUSTOMER.INFO") 
+@
+XQuery
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return $i
+@
+XQuery
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return <i> {$i} </i>
+@ 
+XQuery
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return $i/customerinfo/name
+@
+XQuery
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return <name> {$i/customerinfo/name} </name>
+@
+XQuery
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return <e> {$i/customerinfo/name, $i/customerinfo/phone[1]} </e>
+@
+XQuery 
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return 
+    <a> { copy $cp := $i
+    modify(
+      do delete $cp//text(),
+      do replace value of $cp//@* with "",
+      for $j at $x in $cp/customerinfo/phone
+      return
+        do replace value of $j with $i/customerinfo/phone[$x]
+    )
+    return $cp, copy $cp2 := $i
+    modify(
+      do delete $cp2//text(),
+      do delete $cp2//@*,
+      do replace value of $cp2/customerinfo/name with $i/customerinfo/name/text()
+    )
+    return $cp2 } </a>
+@
+XQuery 
   for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
   return 
     copy $cp := $i
     modify(
       do delete $cp//text(),
       do delete $cp//@*,
+      do insert attribute Cid { $i/customerinfo/@Cid } into $cp/customerinfo,
+      for $j at $x in $cp/customerinfo/phone
+      return
+        do replace value of $j with $i/customerinfo/phone[$x]
+    )
+    return $cp
+@
+XQuery 
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return 
+    <a> { copy $cp := $i
+    modify(
+      do delete $cp//text(),
+      do delete $cp//@*,
       do replace value of $cp/customerinfo/name with $i/customerinfo/name/text()
+    )
+    return $cp, copy $cp2 := $i
+    modify(
+      do delete $cp2//text(),
+      do delete $cp2//@*,
+      do replace value of $cp2/customerinfo/addr/@country  with $i/customerinfo/addr/@country
+    )
+    return $cp2 } </a>
+@
+###################################YOUAREHERE##
+XQuery 
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return 
+    copy $cp := $i
+    modify(
+      for 
+        $j at $x in $cp/customerinfo/phone
+      return
+        do replace value of $j with $i/customerinfo/phone[$x]
+    )
+    return $cp
+@
+
+###############################################
+XQuery 
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")/customerinfo/name[2-1]
+  return $i
+ @
+--------------------------------------------------------------------------------
+
+
+
+XQuery 
+  for $i in db2-fn:xmlcolumn("CUSTOMER.INFO")
+  return 
+    copy $cp := $i
+    modify(
+      do delete $cp//text(),
+      do delete $cp//@*,
+      for 
+        $j at $p in $cp/customerinfo/name
+      return
+        do replace value of $j with $i/customerinfo/name[p]/text()
     )
     return $cp
 @

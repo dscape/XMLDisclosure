@@ -71,6 +71,14 @@ db2 \
   -vf \
   ddl/register_procedures.db2 \
   >> $XD_INST_LOG
+
+###############################################################~ REGISTER SPs ##
+echo "  . Update DB2 Sample"
+db2 \
+  -td@ \
+  -vf \
+  ddl/update_db2sample.db2 \
+  >> $XD_INST_LOG
   
 ##############################################################~ CONNECT RESET ##
 echo "  . Disconnecting"

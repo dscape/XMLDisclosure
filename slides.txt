@@ -1,0 +1,44 @@
+Possibilities:
+  1' Diferent policies for each purpose 
+  2' Purpose is not acceptable to query table
+  3' May contain opt-ins, opt-outs at the document level
+  4' May contain opt-ins, opt-outs or both at the element level (not studied)
+  5' Table does not have privacy policy (FULL ACCESS)
+  6' XML Elements and attibutes are not in the policy (DELETE ALL BY DEFAULT)
+  7' Joining diferent tables with diferent policies
+
+Policy: 
+  Name: Customer for Marketing
+  Purposes: contact (opt-out)
+  Visibility: 
+    Customer: name, home-phone, city and country
+    Product: Everything
+    PurchaseOrder: Everything
+  
+  Name: Customer for Internal
+  Purposes: admin
+  Visibility: No restrictions!
+
+  Name: Customer for Research
+  Purposes: develop
+  Visibility: 
+    Customer: age, city, country, sex
+    Product: Everything
+    PurchaseOrder: Everything
+  
+--------------------------------------------------------------------------------
+- Case  1: All customers for contact                                           -
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+- Case  1: All customers for develop                                           -
+--------------------------------------------------------------------------------
+
+  
+--------------------------------------------------------------------------------
+Case  2: XPath Query, no conditions
+Case  3: XPath Query, conditions
+Case  4: FLOWR Expression, conditions
+Case  5: FLOWR Expression, no conditions
+Case   : All customers, opt-ins (full record)
+Case   : All customers, opt-ins and opt-outs (variance cell level or full record)

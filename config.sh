@@ -17,12 +17,12 @@ log_u=log/uninstall_$(date -u +%m-%d-%Y-%H.%M).log  # uninstallation log
 log_t=log/test_$(date -u +%m-%d-%Y-%H.%M).log       # test log
 
 # jdk ##########################################################################
-jdk=/usr/bin # jdk location (bin folder), whereis javac
+jdk=/usr/bin # jdk location (bin folder), whereis javac, whereis jar
 
 # db2 ##########################################################################
-db2=/opt/IBM/db2/V9.5              # db2 location
+db2=/opt/ibm/db2/V9.7              # db2 location
 database=sample                    # database to be used
-fn=/Volumes/Users/$(whoami)/sqllib/function # the instance's function folder
+fn=/home/$(whoami)/sqllib/function # the instance's function folder
 
 ################################################################~ /END CONFIG ##
 ## End of necessary changes. Please don't edit bellow this line               ##
